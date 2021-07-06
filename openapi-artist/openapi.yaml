@@ -1,0 +1,306 @@
+openapi: 3.0.2
+info:
+  contact:
+    email: vanvuvuong3@gmail.com
+    name: Nhaccuatui API
+    url: https://nhaccuatui-api.io/api
+  description: Get the nhaccuatui.com data from the database. After crawling data
+  license:
+    name: GNU License
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  termsOfService: https://nhaccuatui-api.io/terms-of-service
+  title: Nhaccuatui Music Data
+  version: "1.0"
+servers:
+- description: Artist API
+  url: https://nhaccuatui-api.io/api/v1/artist/
+paths:
+  /artist:
+    delete:
+      parameters:
+      - description: 'Delete data depend on source ID '
+        explode: true
+        in: query
+        name: source_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Delete data depend on the ID
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Delete data depend on artist full name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artist'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                example: Bad request, wrong parameters
+                title: Bad request, wrong parameters
+                type: string
+          description: Invalid Request
+      summary: Delete the artist data
+    get:
+      description: 'Getting all the artist data. Specific for those fields:<br/>**ID**<br/>**Name:
+        **<br/>**Nationality**<br/>**URL**'
+      parameters:
+      - description: Get the data from an ID
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Get the data from an source ID
+        explode: true
+        in: query
+        name: source_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Get the data from ID bigger than the ID you provide
+        explode: true
+        in: query
+        name: since_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: The number of the data you can get
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Get the data from specfic creating time
+        explode: true
+        in: query
+        name: created_at_min
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Get the data to specfic creating time
+        explode: true
+        in: query
+        name: created_at_max
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Get the data by nationality
+        explode: true
+        in: query
+        name: nationality
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artist'
+          description: Sucessfull response
+        "404":
+          content:
+            text/plain:
+              schema:
+                example: Invalid request
+                title: Invalid request
+                type: string
+          description: Invalid request
+      summary: Getting all the artist data (default limit is 20)
+    post:
+      description: Creating the new artist data, and send it to the server
+      parameters:
+      - description: The Source ID to get the data from
+        explode: true
+        in: query
+        name: source_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Artist Full Name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Date of birth
+        explode: true
+        in: query
+        name: birthday
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Gender
+        explode: true
+        in: query
+        name: gender
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Brief description about artist life
+        explode: true
+        in: query
+        name: life
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Artist link URL
+        explode: true
+        in: query
+        name: url
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artist'
+          description: Sucessfull response
+        "400":
+          content:
+            text/plain:
+              schema:
+                example: Bad request, wrong parameters
+                title: Bad request, wrong parameters
+                type: string
+          description: Invalid Request
+      summary: Creating the artist data
+    put:
+      parameters:
+      - description: The Source ID to get the data from
+        explode: true
+        in: query
+        name: source_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Artist Full Name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Date of birth
+        explode: true
+        in: query
+        name: birthday
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Gender
+        explode: true
+        in: query
+        name: gender
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Brief description about artist life
+        explode: true
+        in: query
+        name: life
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Artist link URL
+        explode: true
+        in: query
+        name: url
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/artist'
+          description: Sucessfull response
+        "400":
+          content:
+            text/plain:
+              schema:
+                example: Bad request, wrong parameters
+                title: Bad request, wrong parameters
+                type: string
+          description: Invalid Request
+      summary: Update the artist data
+components:
+  schemas:
+    artist:
+      example:
+        birthday: 16/06/1989
+        nationality: Korean
+        name: Bi Rain
+        life: Sinh ra va lon len tai Han Quoc
+        url: https://nhaccuatui.com/nghe-si-bi-rain.html
+      properties:
+        name:
+          description: artist name
+          example: Bi Rain
+          title: name
+          type: string
+        birthday:
+          description: artist birthday
+          example: 16/06/1989
+          title: birthday
+          type: string
+        nationality:
+          description: artist nationality
+          example: Korean
+          title: nationality
+          type: string
+        life:
+          description: artist life
+          example: Sinh ra va lon len tai Han Quoc
+          title: life
+          type: string
+        url:
+          description: artist URL
+          example: https://nhaccuatui.com/nghe-si-bi-rain.html
+          title: url
+          type: string
+      title: Sample response
+      type: object

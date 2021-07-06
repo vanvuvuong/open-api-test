@@ -1,0 +1,244 @@
+openapi: 3.0.2
+info:
+  contact:
+    email: vanvuvuong3@gmail.com
+    name: Nhaccuatui API
+    url: https://nhaccuatui-api.io/api
+  description: Get the nhaccuatui.com data from the database. After crawling data
+  license:
+    name: GNU License
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  termsOfService: https://nhaccuatui-api.io/terms-of-service
+  title: Nhaccuatui Music Data
+  version: "1.0"
+servers:
+- description: Artist API
+  url: https://nhaccuatui-api.io/api/v1/artist/
+paths:
+  /playlist:
+    delete:
+      parameters:
+      - description: 'Delete data depend on category ID '
+        explode: true
+        in: query
+        name: category_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Delete data depend on the ID
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Delete data depend on artist full name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/playlist'
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                example: Bad request, wrong parameters
+                title: Bad request, wrong parameters
+                type: string
+          description: Invalid Request
+      summary: Delete the artist data
+    get:
+      description: 'Getting all the playlist data (default limit is 20) Specific for
+        those fields:<br/>**Category ID**<br/>**ID**<br/>**Name: **<br/>**URL**'
+      parameters:
+      - description: Get the data from an Category ID
+        explode: true
+        in: query
+        name: category_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Get the data from an ID
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Get the data from ID bigger than the ID you provide
+        explode: true
+        in: query
+        name: since_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: The number of the data you can get
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Get the data from specfic creating time
+        explode: true
+        in: query
+        name: created_at_min
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Get the data to specfic creating time
+        explode: true
+        in: query
+        name: created_at_max
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/playlist'
+          description: Sucessfull response
+        "404":
+          content:
+            text/plain:
+              schema:
+                example: Invalid request
+                title: Invalid request
+                type: string
+          description: Invalid request
+      summary: Getting all the playlist data (default limit is 20)
+    post:
+      description: Creating the new playlist data, and send it to the server
+      parameters:
+      - description: The Category ID to get the data from
+        explode: true
+        in: query
+        name: category_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Playlist name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Artist link URL
+        explode: true
+        in: query
+        name: url
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/playlist'
+          description: Sucessfull response
+        "400":
+          content:
+            text/plain:
+              schema:
+                example: Bad request, wrong parameters
+                title: Bad request, wrong parameters
+                type: string
+          description: Invalid Request
+      summary: Creating the playlist data
+    put:
+      parameters:
+      - description: The Category ID to get the data from
+        explode: true
+        in: query
+        name: category_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Playlist name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Artist link URL
+        explode: true
+        in: query
+        name: url
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/playlist'
+          description: Sucessfull response
+        "400":
+          content:
+            text/plain:
+              schema:
+                example: Bad request, wrong parameters
+                title: Bad request, wrong parameters
+                type: string
+          description: Invalid Request
+      summary: Update the artist data
+components:
+  schemas:
+    playlist:
+      example:
+        category_id: 1
+        name: Nhạc Việt Remix Hot Tháng 06/2021
+        id: 1
+        url: https://www.nhaccuatui.com/playlist/nhac-viet-remix-hot-thang-062021-va.jgIkjDNfwkZI.html
+      properties:
+        category_id:
+          description: source category id to get the data
+          example: 1
+          title: category_id
+          type: integer
+        id:
+          description: id of the data
+          example: 1
+          title: id
+          type: integer
+        name:
+          description: playlist name
+          example: Nhạc Việt Remix Hot Tháng 06/2021
+          title: name
+          type: string
+        url:
+          description: playlist url
+          example: https://www.nhaccuatui.com/playlist/nhac-viet-remix-hot-thang-062021-va.jgIkjDNfwkZI.html
+          title: url
+          type: string
+      title: Sample response
+      type: object
